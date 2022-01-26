@@ -75,10 +75,13 @@ if __name__ == '__main__':
                     js_data = news.get_news(str(consle_arg[1]))
                     news.writer_csv(str(consle_arg[1]), js_data)
                     break
+                else:
+                    print(f"<< no such category -> {str(consle_arg)} >>")
+                    break
             elif len(consle_arg) == 1:
                 print("default category newstories")
                 js_data = news.get_news(news.default_cat[2])
-                news.writer_csv("newstories", js_data)
+                news.writer_csv(str(consle_arg), js_data)
                 break
             else:
                 print(f"<< no such category -> {str(consle_arg)} >>")
