@@ -13,6 +13,7 @@ askstories, showstories, newstories, jobstories
 назву HTML тега і за допомогою регулярного виразу видаляти цей тег разом із усим його вмістом із значення атрибута "text"
 (якщо він існує) отриманого запису.
 """
+import sys
 import requests
 import csv
 from itertools import chain
@@ -53,18 +54,36 @@ if __name__ == '__main__':
             print("*" * 30)
             print('< choose one of the options: askstories, showstories, newstories, jobstories >')
             print("*" * 30)
-            input_cat = input("enter an option -> ")
-            if input_cat in news.default_cat:
-                js_data = news.get_news(input_cat)
-                news.writer_csv(input_cat, js_data)
-                break
-            elif input_cat == "":
+            # input_cat = input("enter an option -> ")
+            # consle_arg = sys.argv
+            # if input_cat in news.default_cat:
+            #     js_data = news.get_news(input_cat)
+            #     news.writer_csv(input_cat, js_data)
+            #     break
+            # elif input_cat == "":
+            #     js_data = news.get_news(news.default_cat[2])
+            #     news.writer_csv(input_cat, js_data)
+            #     break
+            # else:
+            #     print(f"<< no such category -> {input_cat} >>")
+            #     break
+            # print(f"enter an option -> {str(sys.argv[1])}")
+            consle_arg = sys.argv
+            if len(consle_arg) == 2:
+                print(f"enter an option -> {str(sys.argv[1])}")
+                if str(consle_arg[1]) in news.default_cat:
+                    js_data = news.get_news(str(consle_arg[1]))
+                    news.writer_csv(str(consle_arg[1]), js_data)
+                    break
+            elif len(consle_arg) == 1:
+                print("default category newstories")
                 js_data = news.get_news(news.default_cat[2])
-                news.writer_csv(input_cat, js_data)
+                news.writer_csv("newstories", js_data)
                 break
             else:
-                print(f"<< no such category -> {input_cat} >>")
+                print(f"<< no such category -> {str(consle_arg)} >>")
                 break
+
         except Exception as err:
             print(f"<< error invalid input -> {err} >>")
 
